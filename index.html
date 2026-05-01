@@ -15,7 +15,7 @@
       --male: #3b82f6;
       --female: #ec4899;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -28,145 +28,147 @@
       width: 100%;
       max-width: 480px;
       background: var(--card);
-      border-radius: 24px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 20px;
       border: 1px solid #1e293b;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
     }
-    h2 { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 4px; }
-    #clock { font-size: 16px; font-weight: bold; color: var(--accent); text-align: center; margin-top: 4px; }
-    #date { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 16px; }
-    
-    .tabs { display: flex; background: #1e293b; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+    .tabs { display: flex; margin-top: 12px; background: #1e293b; border-radius: 999px; padding: 4px; }
     .tab {
-      flex: 1; padding: 10px 0; border-radius: 8px; cursor: pointer;
+      flex: 1; padding: 8px 0; border-radius: 999px; cursor: pointer;
       text-align: center; color: var(--muted); border: none; background: transparent;
       font-weight: bold; transition: 0.3s;
     }
-    .tab.active { background: var(--accent); color: white; }
-    
+    .tab.active { background: #22c55e33; color: var(--text); }
     .card {
       background: #1e293b;
-      padding: 20px;
-      border-radius: 18px;
+      padding: 16px;
+      border-radius: 16px;
       margin-bottom: 16px;
       border: 1px solid #334155;
     }
-    .hall-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; }
-    .hall-stats { font-size: 14px; margin-bottom: 10px; color: #cbd5e1; }
-    .progress { width: 100%; height: 12px; background: #020617; border-radius: 6px; overflow: hidden; margin-top: 8px; }
-    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.5s ease-out; }
-    
-    .admin-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+    .hall-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
+    .progress { width: 100%; height: 10px; background: #0f172a; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.2s; }
     .admin-btn {
-      width: 44px; height: 44px; border-radius: 12px; border: none;
-      background: #020617; color: white; font-size: 24px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: #0f172a; color: white; font-size: 20px; cursor: pointer;
     }
-    .admin-btn:active { transform: scale(0.95); }
-    
     .reset-btn {
-      width: 100%; margin-top: 10px; padding: 12px; border-radius: 12px;
-      background: #020617; color: var(--danger); border: 1px solid var(--danger);
+      width: 100%; margin-top: 10px; padding: 10px; border-radius: 8px;
+      background: #0f172a; color: var(--muted); border: 1px solid #334155;
       cursor: pointer; font-weight: bold;
     }
     input {
-      width: 100%; padding: 12px; border-radius: 12px; margin-bottom: 12px;
-      border: 1px solid #334155; background: #020617; color: white; font-size: 18px; text-align: center;
+      width: 100%; padding: 10px; border-radius: 10px;
+      border: 1px solid #334155; background: #0f172a; color: white;
+      text-align: center; font-size: 16px; margin-bottom: 10px;
     }
     .btn-primary {
-      width: 100%; padding: 14px; border-radius: 12px;
+      width: 100%; padding: 12px; border-radius: 999px;
       background: var(--accent); border: none; color: white; cursor: pointer;
-      font-weight: bold; font-size: 16px;
+      font-weight: bold;
     }
-
-    footer { text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid #1e293b; }
-    .facebook-link { color: #38bdf8; text-decoration: none; font-size: 14px; font-weight: bold; }
+    .slogan-box {
+      margin-top: 15px; margin-bottom: 15px; padding: 10px; 
+      background: rgba(34, 197, 94, 0.05); border-radius: 12px; 
+      border: 1px dashed var(--accent); text-align: center;
+    }
+    .slogan-text { font-size: 13px; font-style: italic; color: #cbd5e1; }
+    footer {
+      margin-top: 20px; padding-top: 15px; border-top: 1px solid #1e293b; text-align: center;
+    }
+    .footer-link { color: #38bdf8; text-decoration: none; font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px; }
+    .contact-info { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .designer-credit {
+      margin-top: 15px; font-size: 11px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 10px;
+    }
   </style>
 </head>
 <body>
 
 <div class="app">
-  <h2>Fitness Center</h2>
-  <div id="clock">00:00:00</div>
-  <div id="date">--/--/----</div>
 
-  <div id="slogan-box" style="margin-top: 15px; margin-bottom: 20px; padding: 12px; background: rgba(34, 197, 94, 0.05); border-radius: 14px; border: 1px dashed var(--accent); text-align: center;">
-    <p id="slogan-text" style="font-size: 14px; font-style: italic; color: #f1f5f9; font-weight: 500;"></p>
+  <h2 style="text-align: center; color: #4f46e5; border-bottom: 2px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; letter-spacing: 1px;">Fitness Center</h2>
+  <p id="clock" style="margin-top:6px; font-size:14px; color:#cbd5e1; text-align: center;"></p>
+  <p id="date" style="margin-bottom:12px; font-size:13px; color:#94a3b8; text-align: center;"></p>
+
+  <div class="slogan-box">
+    <p id="slogan-text" class="slogan-text"></p>
   </div>
 
+  <p style="color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 10px;">حالة الازدحام اللحظية في صالات النادي</p>
+
   <div class="tabs">
-    <button class="tab active" id="tab-users-btn">المتدربون</button>
-    <button class="tab" id="tab-admin-btn">الإدارة</button>
+    <button class="tab active" id="tab-users">المتدربون</button>
+    <button class="tab" id="tab-admin">الإدارة</button>
   </div>
 
   <!-- صفحة المتدربين -->
   <div id="view-users">
     <div class="card">
-      <div class="hall-title" style="color: var(--male);">صالة الذكور <span id="male-percent">0%</span></div>
-      <div class="hall-stats">الحضور: <span id="male-count">0</span> / 60</div>
-      <div class="progress"><div id="male-progress" class="progress-fill"></div></div>
+      <div class="hall-title" style="color: var(--male);">صالة الذكور</div>
+      <div style="font-size: 14px; margin-bottom: 5px;">الحضور: <span id="maleCount">0</span> / 60</div>
+      <div style="font-size: 14px; margin-bottom: 5px;">النسبة: <span id="malePercent">0%</span></div>
+      <div class="progress"><div id="maleProgress" class="progress-fill"></div></div>
     </div>
 
     <div class="card">
-      <div class="hall-title" style="color: var(--female);">صالة الإناث <span id="female-percent">0%</span></div>
-      <div class="hall-stats">الحضور: <span id="female-count">0</span> / 60</div>
-      <div class="progress"><div id="female-progress" class="progress-fill"></div></div>
+      <div class="hall-title" style="color: var(--female);">صالة الإناث</div>
+      <div style="font-size: 14px; margin-bottom: 5px;">الحضور: <span id="femaleCount">0</span> / 60</div>
+      <div style="font-size: 14px; margin-bottom: 5px;">النسبة: <span id="femalePercent">0%</span></div>
+      <div class="progress"><div id="femaleProgress" class="progress-fill"></div></div>
     </div>
   </div>
 
   <!-- صفحة الإدارة -->
   <div id="view-admin" style="display:none;">
     <div id="admin-login">
-      <p style="margin-bottom: 8px; text-align: center; color: var(--muted);">أدخل كود الإدارة للوصول:</p>
-      <input type="password" id="admin-code-input" placeholder="••••••">
-      <button class="btn-primary" id="admin-login-btn">دخول</button>
-      <p id="admin-login-status" style="color: var(--danger); font-size: 13px; text-align: center; margin-top: 8px;"></p>
+      <p style="text-align: center; margin-bottom: 10px;">أدخل كود الإدارة:</p>
+      <input type="password" id="adminCode" placeholder="••••••">
+      <button class="btn-primary" id="adminLoginBtn">دخول</button>
+      <p id="adminLoginStatus" style="color: var(--danger); font-size: 13px; text-align: center; margin-top: 10px;"></p>
     </div>
 
-    <div id="admin-panel" style="display:none;">
+    <div id="adminPanel" style="display:none;">
       <div class="card">
         <div class="hall-title">صالة الذكور</div>
-        <div class="admin-controls">
-          <button class="admin-btn" id="btn-male-dec">−</button>
-          <span style="font-size: 20px; font-weight: bold;" id="admin-male-count">0</span>
-          <button class="admin-btn" id="btn-male-inc">+</button>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+          <button class="admin-btn" id="maleDec">−</button>
+          <p style="font-size: 18px; font-weight: bold;">الحالي: <span id="maleCountAdmin">0</span></p>
+          <button class="admin-btn" id="maleInc">+</button>
         </div>
       </div>
 
       <div class="card">
         <div class="hall-title">صالة الإناث</div>
-        <div class="admin-controls">
-          <button class="admin-btn" id="btn-female-dec">−</button>
-          <span style="font-size: 20px; font-weight: bold;" id="admin-female-count">0</span>
-          <button class="admin-btn" id="btn-female-inc">+</button>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+          <button class="admin-btn" id="femaleDec">−</button>
+          <p style="font-size: 18px; font-weight: bold;">الحالي: <span id="femaleCountAdmin">0</span></p>
+          <button class="admin-btn" id="femaleInc">+</button>
         </div>
       </div>
 
-      <button class="reset-btn" id="btn-reset-all">إعادة تصفير جميع العدادات</button>
+      <button class="reset-btn" id="resetAll">إعادة التعيين إلى صفر</button>
+      <p id="adminStatus" style="font-size: 13px; text-align: center; margin-top: 10px;"></p>
     </div>
   </div>
 
   <footer>
-    <div style="margin-bottom: 8px;">
-      <a href="https://www.facebook.com/share/17MeJf9vx3/" target="_blank" class="facebook-link">
-        صفحة النادي على فيسبوك ↗
-      </a>
+    <a href="https://www.facebook.com/share/17MeJf9vx3/" target="_blank" class="footer-link">
+      صفحة النادي على فيسبوك ↗
+    </a>
+    <div class="contact-info">
+      للتواصل: <a href="tel:+963998556600" style="color: var(--accent); text-decoration: none; direction: ltr; display: inline-block;">+963 998 556 600</a>
     </div>
-    <div style="color: var(--muted); font-size: 14px; font-weight: bold;">
-      للتواصل (موبايل): 
-      <a href="tel:+963998556600" style="color: var(--accent); text-decoration: none; margin-right: 5px; direction: ltr; display: inline-block;">
-        +963 998 556 600
-      </a>
-    </div>
-    <div style="color: var(--muted); font-size: 13px; margin-top: 8px; line-height: 1.6;">
-      <span style="color: #cbd5e1; font-weight: bold;">العنوان:</span> 
+    <div class="contact-info" style="font-size: 12px; margin-top: 5px;">
       سلمية - شارع الفردوس - مقابل فرن أمين
     </div>
-    <div style="margin-top: 15px; font-size: 11px; color: #64748b; border-top: 1px solid #1e293b; pt-10; padding-top: 12px;">
+    <div class="designer-credit">
       تم التصميم بواسطة <span style="color: var(--accent); font-weight: bold;">Dr. Zelal Alsaftli</span>
     </div>
   </footer>
+
 </div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -178,6 +180,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const MAX = 60;
 const ADMIN_CODE = "331981";
 
+// الشعارات المحفزة
 const slogans = [
   "\"لا تتوقف عندما تتعب.. توقف عندما تنتهي!\"",
   "\"عرق اليوم هو قوة الغد.\"",
@@ -194,54 +197,86 @@ function showRandomSlogan() {
 }
 showRandomSlogan();
 
+// عناصر الواجهة
+const maleCount = document.getElementById("maleCount");
+const femaleCount = document.getElementById("femaleCount");
+const malePercent = document.getElementById("malePercent");
+const femalePercent = document.getElementById("femalePercent");
+const maleProgress = document.getElementById("maleProgress");
+const femaleProgress = document.getElementById("femaleProgress");
+
+const maleCountAdmin = document.getElementById("maleCountAdmin");
+const femaleCountAdmin = document.getElementById("femaleCountAdmin");
+
+const adminLoginUI = document.getElementById("admin-login");
+const adminPanelUI = document.getElementById("adminPanel");
+const adminCodeInput = document.getElementById("adminCode");
+const adminLoginBtn = document.getElementById("adminLoginBtn");
+const adminLoginStatus = document.getElementById("adminLoginStatus");
+
+const maleInc = document.getElementById("maleInc");
+const maleDec = document.getElementById("maleDec");
+const femaleInc = document.getElementById("femaleInc");
+const femaleDec = document.getElementById("femaleDec");
+const resetAll = document.getElementById("resetAll");
+
 // الساعة والتاريخ
 function updateClock() {
   const now = new Date();
-  document.getElementById("clock").textContent = now.toLocaleTimeString('ar-EG', { hour12: true });
-  
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById("date").textContent = now.toLocaleDateString('ar-EG', options);
+
+  let hours = now.getHours();
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+  let ampm = hours >= 12 ? "مساءً" : "صباحًا";
+  hours = hours % 12 || 12;
+
+  document.getElementById("clock").textContent = `الوقت الآن: ${hours}:${minutes} ${ampm}`;
+
+  const days = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+  const months = ["كانون الثاني", "شباط", "آذار", "نيسان", "أيار", "حزيران", "تموز", "آب", "أيلول", "تشرين الأول", "تشرين الثاني", "كانون الأول"];
+
+  const dayName = days[now.getDay()];
+  const day = now.getDate();
+  const month = months[now.getMonth()];
+  const year = now.getFullYear();
+
+  document.getElementById("date").textContent = `${dayName} ${day} ${month} ${year}`;
 }
 setInterval(updateClock, 1000);
 updateClock();
 
 // التبويبات
-const tabUsersBtn = document.getElementById("tab-users-btn");
-const tabAdminBtn = document.getElementById("tab-admin-btn");
-const viewUsers = document.getElementById("view-users");
-const viewAdmin = document.getElementById("view-admin");
-
-tabUsersBtn.onclick = () => {
-  tabUsersBtn.classList.add("active");
-  tabAdminBtn.classList.remove("active");
-  viewUsers.style.display = "block";
-  viewAdmin.style.display = "none";
+document.getElementById("tab-users").onclick = () => {
+  document.getElementById("view-users").style.display = "";
+  document.getElementById("view-admin").style.display = "none";
+  document.getElementById("tab-users").classList.add("active");
+  document.getElementById("tab-admin").classList.remove("active");
 };
 
-tabAdminBtn.onclick = () => {
-  tabAdminBtn.classList.add("active");
-  tabUsersBtn.classList.remove("active");
-  viewAdmin.style.display = "block";
-  viewUsers.style.display = "none";
+document.getElementById("tab-admin").onclick = () => {
+  document.getElementById("view-users").style.display = "none";
+  document.getElementById("view-admin").style.display = "";
+  document.getElementById("tab-admin").classList.add("active");
+  document.getElementById("tab-users").classList.remove("active");
 };
 
-// تحديث واجهة المستخدم
+// تحديث الواجهة
 function updateUI(hall, count) {
   const percent = Math.round((count / MAX) * 100);
+
   if (hall === "male") {
-    document.getElementById("male-count").textContent = count;
-    document.getElementById("male-percent").textContent = percent + "%";
-    document.getElementById("male-progress").style.width = percent + "%";
-    document.getElementById("admin-male-count").textContent = count;
-  } else if (hall === "female") {
-    document.getElementById("female-count").textContent = count;
-    document.getElementById("female-percent").textContent = percent + "%";
-    document.getElementById("female-progress").style.width = percent + "%";
-    document.getElementById("admin-female-count").textContent = count;
+    maleCount.textContent = count;
+    malePercent.textContent = percent + "%";
+    maleProgress.style.width = percent + "%";
+    maleCountAdmin.textContent = count;
+  } else {
+    femaleCount.textContent = count;
+    femalePercent.textContent = percent + "%";
+    femaleProgress.style.width = percent + "%";
+    femaleCountAdmin.textContent = count;
   }
 }
 
-// تحميل البيانات الأولية
+// تحميل البيانات
 async function loadData() {
   const { data } = await db.from("halls").select("*");
   if (data) {
@@ -249,39 +284,39 @@ async function loadData() {
   }
 }
 
-// تحديث العدد في القاعدة
-async function setCount(hall, current) {
-  const newValue = Math.max(0, Math.min(MAX, current));
+// تحديث العدد
+async function setCountInDB(hall, value) {
+  const newValue = Math.max(0, Math.min(MAX, value));
   await db.from("halls").update({ current_count: newValue }).eq("hall_name", hall);
 }
 
 // دخول الإدارة
-document.getElementById("admin-login-btn").onclick = () => {
-  if (document.getElementById("admin-code-input").value === ADMIN_CODE) {
-    document.getElementById("admin-login").style.display = "none";
-    document.getElementById("admin-panel").style.display = "block";
+adminLoginBtn.onclick = () => {
+  if (adminCodeInput.value === ADMIN_CODE) {
+    adminLoginUI.style.display = "none";
+    adminPanelUI.style.display = "block";
   } else {
-    document.getElementById("admin-login-status").textContent = "الكود غير صحيح";
+    adminLoginStatus.textContent = "الكود غير صحيح";
   }
 };
 
-// أزرار التحكم
-document.getElementById("btn-male-inc").onclick = () => setCount("male", parseInt(document.getElementById("admin-male-count").textContent) + 1);
-document.getElementById("btn-male-dec").onclick = () => setCount("male", parseInt(document.getElementById("admin-male-count").textContent) - 1);
-document.getElementById("btn-female-inc").onclick = () => setCount("female", parseInt(document.getElementById("admin-female-count").textContent) + 1);
-document.getElementById("btn-female-dec").onclick = () => setCount("female", parseInt(document.getElementById("admin-female-count").textContent) - 1);
+// أزرار الإدارة
+maleInc.onclick = () => setCountInDB("male", Number(maleCountAdmin.textContent) + 1);
+maleDec.onclick = () => setCountInDB("male", Number(maleCountAdmin.textContent) - 1);
+femaleInc.onclick = () => setCountInDB("female", Number(femaleCountAdmin.textContent) + 1);
+femaleDec.onclick = () => setCountInDB("female", Number(femaleCountAdmin.textContent) - 1);
 
-document.getElementById("btn-reset-all").onclick = async () => {
+resetAll.onclick = async () => {
   if (confirm("هل تريد تصفير جميع العدادات؟")) {
     await Promise.all([
-      db.from("halls").update({ current_count: 0 }).eq("hall_name", "male"),
-      db.from("halls").update({ current_count: 0 }).eq("hall_name", "female")
+      setCountInDB("male", 0),
+      setCountInDB("female", 0)
     ]);
   }
 };
 
-// الاشتراك في التحديثات اللحظية
-db.channel("realtime_halls")
+// تحديث لحظي
+db.channel("realtime")
   .on("postgres_changes", { event: "UPDATE", schema: "public", table: "halls" }, payload => {
     updateUI(payload.new.hall_name, payload.new.current_count);
   })
@@ -289,5 +324,7 @@ db.channel("realtime_halls")
 
 loadData();
 </script>
+
 </body>
 </html>
+
