@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fitness Center - حالة الازدحام</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #0f172a;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --text: #f9fafb;
+      --muted: #94a3b8;
+      --male: #3b82f6;
+      --female: #ec4899;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .app {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card);
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid #1e293b;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    h2 { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 4px; }
+    #clock { font-size: 16px; font-weight: bold; color: var(--accent); text-align: center; margin-top: 4px; }
+    #date { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 16px; }
+    
+    .tabs { display: flex; background: #1e293b; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+    .tab {
+      flex: 1; padding: 10px 0; border-radius: 8px; cursor: pointer;
+      text-align: center; color: var(--muted); border: none; background: transparent;
+      font-weight: bold; transition: 0.3s;
+    }
+    .tab.active { background: var(--accent); color: white; }
+    
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      border: 1px solid #334155;
+    }
+    .hall-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .hall-stats { font-size: 14px; margin-bottom: 10px; color: #cbd5e1; }
+    .progress { width: 100%; height: 12px; background: #020617; border-radius: 6px; overflow: hidden; margin-top: 8px; }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.5s ease-out; }
+    
+    .admin-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+    .admin-btn {
+      width: 44px; height: 44px; border-radius: 12px; border: none;
+      background: #020617; color: white; font-size: 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .admin-btn:active { transform: scale(0.95); }
+    
+    .reset-btn {
+      width: 100%; margin-top: 10px; padding: 12px; border-radius: 12px;
+      background: #020617; color: var(--danger); border: 1px solid var(--danger);
+      cursor: pointer; font-weight: bold;
+    }
+    input {
+      width: 100%; padding: 12px; border-radius: 12px; margin-bottom: 12px;
+      border: 1px solid #334155; background: #020617; color: white; font-size: 18px; text-align: center;
+    }
+    .btn-primary {
+      width: 100%; padding: 14px; border-radius: 12px;
+      background: var(--accent); border: none; color: white; cursor: pointer;
+      font-weight: bold; font-size: 16px;
+    }
+
+    footer { text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid #1e293b; }
+    .facebook-link { color: #38bdf8; text-decoration: none; font-size: 14px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <h2>Fitness Center</h2>
+  <div id="clock">00:00:00</div>
+  <div id="date">--/--/----</div>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-users-btn">المتدربون</button>
+    <button class="tab" id="tab-admin-btn">الإدارة</button>
+  </div>
+
+  <!-- صفحة المتدربين -->
+  <div id="view-users">
+    <div class="card">
+      <div class="hall-title" style="color: var(--male);">صالة الذكور <span id="male-percent">0%</span></div>
+      <div class="hall-stats">الحضور: <span id="male-count">0</span> / 60</div>
+      <div class="progress"><div id="male-progress" class="progress-fill"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="hall-title" style="color: var(--female);">صالة الإناث <span id="female-percent">0%</span></div>
+      <div class="hall-stats">الحضور: <span id="female-count">0</span> / 60</div>
+      <div class="progress"><div id="female-progress" class="progress-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- صفحة الإدارة -->
+  <div id="view-admin" style="display:none;">
+    <div id="admin-login">
+      <p style="margin-bottom: 8px; text-align: center; color: var(--muted);">أدخل كود الإدارة للوصول:</p>
+      <input type="password" id="admin-code-input" placeholder="••••••">
+      <button class="btn-primary" id="admin-login-btn">دخول</button>
+      <p id="admin-login-status" style="color: var(--danger); font-size: 13px; text-align: center; margin-top: 8px;"></p>
+    </div>
+
+    <div id="admin-panel" style="display:none;">
+      <div class="card">
+        <div class="hall-title">صالة الذكور</div>
+        <div class="admin-controls">
+          <button class="admin-btn" id="btn-male-dec">−</button>
+          <span style="font-size: 20px; font-weight: bold;" id="admin-male-count">0</span>
+          <button class="admin-btn" id="btn-male-inc">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hall-title">صالة الإناث</div>
+        <div class="admin-controls">
+          <button class="admin-btn" id="btn-female-dec">−</button>
+          <span style="font-size: 20px; font-weight: bold;" id="admin-female-count">0</span>
+          <button class="admin-btn" id="btn-female-inc">+</button>
+        </div>
+      </div>
+
+      <button class="reset-btn" id="btn-reset-all">إعادة تصفير جميع العدادات</button>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://www.facebook.com/share/17MeJf9vx3/" target="_blank" class="facebook-link">
+      صفحة النادي على فيسبوك ↗
+    </a>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://akundvjvbcudlfkrtpge.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_jTGqzV2qSt2N2UsNWfL5Mg_hHlSz4UT";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const MAX = 60;
+const ADMIN_CODE = "331981";
+
+// الساعة والتاريخ
+function updateClock() {
+  const now = new Date();
+  document.getElementById("clock").textContent = now.toLocaleTimeString('ar-EG', { hour12: true });
+  
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById("date").textContent = now.toLocaleDateString('ar-EG', options);
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// التبويبات
+const tabUsersBtn = document.getElementById("tab-users-btn");
+const tabAdminBtn = document.getElementById("tab-admin-btn");
+const viewUsers = document.getElementById("view-users");
+const viewAdmin = document.getElementById("view-admin");
+
+tabUsersBtn.onclick = () => {
+  tabUsersBtn.classList.add("active");
+  tabAdminBtn.classList.remove("active");
+  viewUsers.style.display = "block";
+  viewAdmin.style.display = "none";
+};
+
+tabAdminBtn.onclick = () => {
+  tabAdminBtn.classList.add("active");
+  tabUsersBtn.classList.remove("active");
+  viewAdmin.style.display = "block";
+  viewUsers.style.display = "none";
+};
+
+// تحديث واجهة المستخدم
+function updateUI(hall, count) {
+  const percent = Math.round((count / MAX) * 100);
+  if (hall === "male") {
+    document.getElementById("male-count").textContent = count;
+    document.getElementById("male-percent").textContent = percent + "%";
+    document.getElementById("male-progress").style.width = percent + "%";
+    document.getElementById("admin-male-count").textContent = count;
+  } else if (hall === "female") {
+    document.getElementById("female-count").textContent = count;
+    document.getElementById("female-percent").textContent = percent + "%";
+    document.getElementById("female-progress").style.width = percent + "%";
+    document.getElementById("admin-female-count").textContent = count;
+  }
+}
+
+// تحميل البيانات الأولية
+async function loadData() {
+  const { data } = await db.from("halls").select("*");
+  if (data) {
+    data.forEach(row => updateUI(row.hall_name, row.current_count));
+  }
+}
+
+// تحديث العدد في القاعدة
+async function setCount(hall, current) {
+  const newValue = Math.max(0, Math.min(MAX, current));
+  await db.from("halls").update({ current_count: newValue }).eq("hall_name", hall);
+}
+
+// دخول الإدارة
+document.getElementById("admin-login-btn").onclick = () => {
+  if (document.getElementById("admin-code-input").value === ADMIN_CODE) {
+    document.getElementById("admin-login").style.display = "none";
+    document.getElementById("admin-panel").style.display = "block";
+  } else {
+    document.getElementById("admin-login-status").textContent = "الكود غير صحيح";
+  }
+};
+
+// أزرار التحكم
+document.getElementById("btn-male-inc").onclick = () => setCount("male", parseInt(document.getElementById("admin-male-count").textContent) + 1);
+document.getElementById("btn-male-dec").onclick = () => setCount("male", parseInt(document.getElementById("admin-male-count").textContent) - 1);
+document.getElementById("btn-female-inc").onclick = () => setCount("female", parseInt(document.getElementById("admin-female-count").textContent) + 1);
+document.getElementById("btn-female-dec").onclick = () => setCount("female", parseInt(document.getElementById("admin-female-count").textContent) - 1);
+
+document.getElementById("btn-reset-all").onclick = async () => {
+  if (confirm("هل تريد تصفير جميع العدادات؟")) {
+    await Promise.all([
+      db.from("halls").update({ current_count: 0 }).eq("hall_name", "male"),
+      db.from("halls").update({ current_count: 0 }).eq("hall_name", "female")
+    ]);
+  }
+};
+
+// الاشتراك في التحديثات اللحظية
+db.channel("realtime_halls")
+  .on("postgres_changes", { event: "UPDATE", schema: "public", table: "halls" }, payload => {
+    updateUI(payload.new.hall_name, payload.new.current_count);
+  })
+  .subscribe();
+
+loadData();
+</script>
+</body>
+</html>
