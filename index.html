@@ -91,6 +91,10 @@
   <div id="clock">00:00:00</div>
   <div id="date">--/--/----</div>
 
+  <div id="slogan-box" style="margin-top: 15px; margin-bottom: 20px; padding: 12px; background: rgba(34, 197, 94, 0.05); border-radius: 14px; border: 1px dashed var(--accent); text-align: center;">
+    <p id="slogan-text" style="font-size: 14px; font-style: italic; color: #f1f5f9; font-weight: 500;"></p>
+  </div>
+
   <div class="tabs">
     <button class="tab active" id="tab-users-btn">المتدربون</button>
     <button class="tab" id="tab-admin-btn">الإدارة</button>
@@ -144,9 +148,24 @@
   </div>
 
   <footer>
-    <a href="https://www.facebook.com/share/17MeJf9vx3/" target="_blank" class="facebook-link">
-      صفحة النادي على فيسبوك ↗
-    </a>
+    <div style="margin-bottom: 8px;">
+      <a href="https://www.facebook.com/share/17MeJf9vx3/" target="_blank" class="facebook-link">
+        صفحة النادي على فيسبوك ↗
+      </a>
+    </div>
+    <div style="color: var(--muted); font-size: 14px; font-weight: bold;">
+      للتواصل (موبايل): 
+      <a href="tel:+963998556600" style="color: var(--accent); text-decoration: none; margin-right: 5px; direction: ltr; display: inline-block;">
+        +963 998 556 600
+      </a>
+    </div>
+    <div style="color: var(--muted); font-size: 13px; margin-top: 8px; line-height: 1.6;">
+      <span style="color: #cbd5e1; font-weight: bold;">العنوان:</span> 
+      سلمية - شارع الفردوس - مقابل فرن أمين
+    </div>
+    <div style="margin-top: 15px; font-size: 11px; color: #64748b; border-top: 1px solid #1e293b; pt-10; padding-top: 12px;">
+      تم التصميم بواسطة <span style="color: var(--accent); font-weight: bold;">Dr. Zelal Alsaftli</span>
+    </div>
   </footer>
 </div>
 
@@ -158,6 +177,22 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const MAX = 60;
 const ADMIN_CODE = "331981";
+
+const slogans = [
+  "\"لا تتوقف عندما تتعب.. توقف عندما تنتهي!\"",
+  "\"عرق اليوم هو قوة الغد.\"",
+  "\"النجاح يبدأ بخطوة.. واليوم هو اليوم المناسب.\"",
+  "\"صحتك هي استثمارك الحقيقي.. حافظ عليها.\"",
+  "\"التحدي هو ما يجعل الحياة مثيرة!\"",
+  "\"أنت أقوى مما تعتقد.. استمر في المحاولة.\"",
+  "\"لا توجد أعذار.. فقط نتائج.\""
+];
+
+function showRandomSlogan() {
+  const randomIndex = Math.floor(Math.random() * slogans.length);
+  document.getElementById("slogan-text").textContent = slogans[randomIndex];
+}
+showRandomSlogan();
 
 // الساعة والتاريخ
 function updateClock() {
