@@ -287,7 +287,11 @@ async function loadData() {
 // تحديث العدد
 async function setCountInDB(hall, value) {
   const newValue = Math.max(0, Math.min(MAX, value));
-  await db.from("halls").update({ current_count: newValue }).eq("hall_name", hall);
+  await db
+    .from("halls")
+    .update({ current_count: newValue })
+    .eq("hall_name", hall)
+    .select();
 }
 
 // دخول الإدارة
