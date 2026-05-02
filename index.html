@@ -6,37 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #000000;
-      --card: #0d0d0d;
-      --accent: #00ff6a;
-      --accent-dark: #00cc55;
-      --danger: #ff2e2e;
-      --text: #ffffff;
-      --muted: #b3b3b3;
-      --male: #1e90ff;
-      --female: #ff3fb4;
-      --radius: 20px;
-      --shadow: 0 0 25px rgba(0,255,100,0.25);
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #f97316; /* البرتقالي الحيوي من الصورة */
+      --accent-dark: #ea580c;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --male: #3b82f6; /* الأزرق من الصورة */
+      --female: #f43f5e;
+      --radius: 24px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
     body {
-      background: linear-gradient(135deg, #000000, #0a0a0a, #111111);
+      background: radial-gradient(circle at top right, #1e293b, #0f172a);
       color: var(--text);
       min-height: 100vh;
       padding: 16px;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
     .app {
       width: 100%;
       max-width: 480px;
-      background: rgba(20, 20, 20, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(20px);
       border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: 0 0 40px rgba(0,255,100,0.15);
-      border: 1px solid rgba(0,255,100,0.15);
-      animation: appEntrance 0.6s ease-out;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: appEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     @keyframes appEntrance {
       from { opacity: 0; transform: scale(0.95); }
@@ -63,15 +64,15 @@
       box-shadow: 0 0 15px var(--accent);
     }
     .card {
-      background: #111;
-      padding: 20px;
+      background: rgba(255,255,255,0.03);
+      padding: 22px;
       border-radius: var(--radius);
       margin-top: 20px;
-      border: 1px solid rgba(0,255,100,0.15);
-      box-shadow: 0 0 20px rgba(0,255,100,0.1);
-      transition: 0.25s;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 0 25px rgba(0,255,100,0.25); border-color: rgba(0,255,100,0.3); }
+    .card:hover { transform: translateY(-6px); border-color: rgba(249, 115, 22, 0.3); }
     .hall-title { font-size: 22px; font-weight: 900; margin-bottom: 2px; letter-spacing: 1px; }
     .card-content { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     .stats-info { flex: 1; }
@@ -79,32 +80,32 @@
     /* العداد الدائري */
     .gauge-wrapper { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
     .gauge-svg { transform: rotate(-90deg); width: 80px; height: 80px; }
-    .gauge-bg { fill: none; stroke: #1a1a1a; stroke-width: 8; }
+    .gauge-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 8; }
     .gauge-fill { 
-      fill: none; stroke-width: 8; stroke-linecap: round; 
+      fill: none; stroke-width: 10; stroke-linecap: round; 
       stroke-dasharray: 226; stroke-dashoffset: 226; 
-      transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s;
-      filter: drop-shadow(0 0 5px currentColor);
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(0 0 8px currentColor);
     }
     .gauge-text {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 16px; font-weight: 900; color: var(--text);
+      font-size: 18px; font-weight: 900; color: var(--text);
     }
 
-    .progress { width: 100%; height: 8px; background: #000; border-radius: 999px; overflow: hidden; margin-top: 12px; border: 1px solid #222; }
+    .progress { width: 100%; height: 8px; background: rgba(0,0,0,0.2); border-radius: 999px; overflow: hidden; margin-top: 12px; border: none; }
     .progress-fill { 
       height: 100%; 
-      background: linear-gradient(90deg, #00ff6a, #00cc55); 
+      background: linear-gradient(90deg, var(--accent), #fb923c); 
       width: 0%; 
-      transition: width 0.25s ease-out; 
-      box-shadow: 0 0 12px #00ff6a;
+      transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
     }
     .admin-btn {
-      width: 45px; height: 45px; border-radius: 50%; border: none;
-      background: #000; color: var(--accent); font-size: 26px; cursor: pointer;
+      width: 45px; height: 45px; border-radius: 16px; border: none;
+      background: #334155; color: white; font-size: 26px; cursor: pointer;
       margin-right: 10px; transition: 0.2s; font-weight: bold;
     }
-    .admin-btn:hover { background: var(--accent); color: #000; transform: scale(1.15); box-shadow: 0 0 15px var(--accent); }
+    .admin-btn:hover { background: var(--accent); color: white; transform: scale(1.05); box-shadow: 0 5px 15px rgba(249, 115, 22, 0.3); }
     .admin-btn:active { transform: scale(0.9); }
     .reset-btn {
       width: 100%; margin-top: 15px; padding: 12px; border-radius: 12px;
@@ -126,28 +127,80 @@
     .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 0 15px var(--accent); }
     .btn-primary:active { transform: translateY(0) scale(0.98); }
     .slogan-box {
-      margin-top: 15px; margin-bottom: 15px; padding: 12px; 
-      background: rgba(34, 197, 94, 0.05); border-radius: 14px; 
-      border: 1px dashed var(--accent); text-align: center;
+      margin-top: 15px; margin-bottom: 20px; padding: 15px; 
+      background: #ccff00; /* فوسفوري علامة النادي */
+      border-radius: 18px; 
+      border: none;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .slogan-box::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { left: -100%; top: -100%; }
+      100% { left: 100%; top: 100%; }
+    }
+    .slogan-text { 
+      font-size: 16px; 
+      font-weight: 800; 
+      color: #1e1b4b; /* نيلي عميق */
+      position: relative;
+      z-index: 1;
+    }
+    .logo-container {
+      background: rgba(204, 255, 0, 0.05);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(204, 255, 0, 0.2);
+      box-shadow: 0 0 20px rgba(204, 255, 0, 0.1), inset 0 0 15px rgba(204, 255, 0, 0.05);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .logo-text {
+      color: #ccff00;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(204, 255, 0, 0.5), 0 0 20px rgba(204, 255, 0, 0.3);
+    }
+    .logo-icon {
+      color: #ccff00;
+      filter: drop-shadow(0 0 8px rgba(204, 255, 0, 0.6));
     }
     .clock-container {
-      background: #050505;
-      border-radius: 14px;
-      padding: 12px 20px;
-      margin-bottom: 15px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-radius: 20px;
+      padding: 15px 25px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 15px;
-      border: 1px solid #1a1a1a;
-      box-shadow: inset 0 0 10px rgba(0,255,106,0.05);
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     .clock-time {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 900;
-      color: var(--accent);
-      text-shadow: 0 0 15px rgba(0,255,106,0.4);
-      font-family: monospace;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      font-family: 'JetBrains Mono', monospace;
       letter-spacing: 2px;
     }
     .clock-divider {
@@ -161,19 +214,20 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      border-right: 2px solid #1a1a1a;
+      border-right: 2px solid rgba(255,255,255,0.1);
       padding-right: 12px;
       margin-right: 5px;
     }
     .clock-ampm {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
-      color: var(--accent);
+      color: white;
       text-transform: uppercase;
-      background: rgba(0,255,106,0.1);
-      padding: 2px 5px;
-      border-radius: 4px;
+      background: var(--accent);
+      padding: 3px 8px;
+      border-radius: 6px;
       margin-bottom: 4px;
+      box-shadow: 0 4px 10px rgba(249, 115, 22, 0.4);
     }
     .clock-date-small {
       font-size: 11px;
@@ -201,17 +255,24 @@
       margin-top: 20px; font-size: 11px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px;
     }
   </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <div class="app">
 
-  <h2 style="text-align: center; color: var(--accent); border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Fitness Center</h2>
+  <div class="logo-container">
+    <i data-lucide="dumbbell" class="logo-icon" style="width: 32px; height: 32px;"></i>
+    <h2 class="logo-text">Fitness Center</h2>
+  </div>
   
   <div class="clock-container">
     <div class="clock-meta">
       <span id="clock-ampm" class="clock-ampm">--</span>
-      <span id="clock-day" class="clock-date-small">--</span>
+      <div style="display: flex; align-items: center; gap: 4px; color: var(--muted); font-size: 11px;">
+        <i data-lucide="calendar" style="width: 12px; height: 12px;"></i>
+        <span id="clock-day">--</span>
+      </div>
     </div>
     <div class="clock-time">
       <span id="hrs">00</span><span class="clock-divider">:</span><span id="mins">00</span>
@@ -219,17 +280,26 @@
     <div class="clock-seconds" id="secs">00</div>
   </div>
 
-  <p id="full-date" style="margin-bottom:12px; font-size:12px; color:#444; text-align: center; font-weight: bold;"></p>
+  <p id="full-date" style="margin-bottom:12px; font-size:12px; color:var(--muted); text-align: center; font-weight: bold;"></p>
 
   <div class="slogan-box">
     <p id="slogan-text" class="slogan-text"></p>
   </div>
 
-  <p style="color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 10px;">حالة الازدحام اللحظية في صالات النادي</p>
+  <p style="color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+    <i data-lucide="activity" style="width: 16px; height: 16px; color: var(--accent);"></i>
+    حالة الازدحام اللحظية في صالات النادي
+  </p>
 
   <div class="tabs">
-    <button class="tab active" id="tab-users">المتدربون</button>
-    <button class="tab" id="tab-admin">الإدارة</button>
+    <button class="tab active" id="tab-users" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+      المتدربون
+    </button>
+    <button class="tab" id="tab-admin" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+      الإدارة
+    </button>
   </div>
 
   <!-- صفحة المتدربين -->
@@ -237,7 +307,10 @@
     <div class="card">
       <div class="card-content">
         <div class="stats-info">
-          <div class="hall-title" style="color: var(--male);">صالة الذكور</div>
+          <div class="hall-title" style="color: var(--male); display: flex; align-items: center; gap: 8px;">
+            <i data-lucide="user" style="width: 22px; height: 22px;"></i>
+            صالة الذكور
+          </div>
           <div style="font-size: 14px; color: var(--muted); margin-bottom: 4px;">الوضع الحالي</div>
           <div style="font-size: 18px; font-weight: 800;">
             <span id="maleCount" style="color: var(--text);">0</span>
@@ -258,7 +331,10 @@
     <div class="card">
       <div class="card-content">
         <div class="stats-info">
-          <div class="hall-title" style="color: var(--female);">صالة الإناث</div>
+          <div class="hall-title" style="color: var(--female); display: flex; align-items: center; gap: 8px;">
+            <i data-lucide="user-round" style="width: 22px; height: 22px;"></i>
+            صالة الإناث
+          </div>
           <div style="font-size: 14px; color: var(--muted); margin-bottom: 4px;">الوضع الحالي</div>
           <div style="font-size: 18px; font-weight: 800;">
             <span id="femaleCount" style="color: var(--text);">0</span>
@@ -280,7 +356,10 @@
   <!-- صفحة الإدارة -->
   <div id="view-admin" style="display:none;">
     <div id="admin-login">
-      <p style="text-align: center; margin-bottom: 10px;">أدخل كود الإدارة:</p>
+      <p style="text-align: center; margin-bottom: 10px; color: var(--muted);">
+        <i data-lucide="lock" style="width: 16px; height: 16px; vertical-align: middle; margin-left: 4px;"></i>
+        أدخل كود الإدارة:
+      </p>
       <input type="password" id="adminCode" placeholder="••••••">
       <button class="btn-primary" id="adminLoginBtn">دخول</button>
       <p id="adminLoginStatus" style="color: var(--danger); font-size: 13px; text-align: center; margin-top: 10px;"></p>
@@ -288,25 +367,40 @@
 
     <div id="adminPanel" style="display:none;">
       <div class="card">
-        <div class="hall-title">صالة الذكور</div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
-          <button class="admin-btn" id="maleDec">−</button>
-          <p style="font-size: 18px; font-weight: bold;">الحالي: <span id="maleCountAdmin">0</span></p>
-          <button class="admin-btn" id="maleInc">+</button>
+        <div class="hall-title" style="color: var(--male); display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+          إدارة صالة الذكور
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">
+          <button class="admin-btn" id="maleDec"><i data-lucide="minus"></i></button>
+          <div style="text-align: center;">
+            <div style="font-size: 24px; font-weight: 900; color: var(--text);" id="maleCountAdmin">0</div>
+            <div style="font-size: 11px; color: var(--muted);">العدد الحالي</div>
+          </div>
+          <button class="admin-btn" id="maleInc"><i data-lucide="plus"></i></button>
         </div>
       </div>
 
       <div class="card">
-        <div class="hall-title">صالة الإناث</div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
-          <button class="admin-btn" id="femaleDec">−</button>
-          <p style="font-size: 18px; font-weight: bold;">الحالي: <span id="femaleCountAdmin">0</span></p>
-          <button class="admin-btn" id="femaleInc">+</button>
+        <div class="hall-title" style="color: var(--female); display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="user-round" style="width: 20px; height: 20px;"></i>
+          إدارة صالة الإناث
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">
+          <button class="admin-btn" id="femaleDec"><i data-lucide="minus"></i></button>
+          <div style="text-align: center;">
+            <div style="font-size: 24px; font-weight: 900; color: var(--text);" id="femaleCountAdmin">0</div>
+            <div style="font-size: 11px; color: var(--muted);">العدد الحالي</div>
+          </div>
+          <button class="admin-btn" id="femaleInc"><i data-lucide="plus"></i></button>
         </div>
       </div>
 
-      <button class="reset-btn" id="resetAll">إعادة التعيين إلى صفر</button>
-      <p id="adminStatus" style="font-size: 13px; text-align: center; margin-top: 10px;"></p>
+      <button class="reset-btn" id="resetAll" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
+        إعادة التعيين إلى صفر
+      </button>
+      <p id="adminStatus" style="font-size: 13px; text-align: center; margin-top: 10px; color: var(--muted);"></p>
     </div>
   </div>
 
@@ -338,9 +432,9 @@ const ADMIN_CODE = "331981";
 
 // الشعارات المحفزة
 const slogans = [
+  "النجاح يبدأ بخطوة.. واليوم هو اليوم المناسب.",
   "\"لا تتوقف عندما تتعب.. توقف عندما تنتهي!\"",
   "\"عرق اليوم هو قوة الغد.\"",
-  "\"النجاح يبدأ بخطوة.. واليوم هو اليوم المناسب.\"",
   "\"صحتك هي استثمارك الحقيقي.. حافظ عليها.\"",
   "\"التحدي هو ما يجعل الحياة مثيرة!\"",
   "\"أنت أقوى مما تعتقد.. استمر في المحاولة.\"",
@@ -417,6 +511,7 @@ document.getElementById("tab-users").onclick = () => {
   usersView.classList.add("fade-in");
   document.getElementById("tab-users").classList.add("active");
   document.getElementById("tab-admin").classList.remove("active");
+  lucide.createIcons();
 };
 
 document.getElementById("tab-admin").onclick = () => {
@@ -429,6 +524,7 @@ document.getElementById("tab-admin").onclick = () => {
   adminView.classList.add("fade-in");
   document.getElementById("tab-admin").classList.add("active");
   document.getElementById("tab-users").classList.remove("active");
+  lucide.createIcons();
 };
 
 // تحديث الواجهة
@@ -474,6 +570,7 @@ adminLoginBtn.onclick = () => {
   if (adminCodeInput.value === ADMIN_CODE) {
     adminLoginUI.style.display = "none";
     adminPanelUI.style.display = "block";
+    lucide.createIcons();
   } else {
     adminLoginStatus.textContent = "الكود غير صحيح";
   }
@@ -502,6 +599,7 @@ db.channel("realtime")
   .subscribe();
 
 loadData();
+lucide.createIcons();
 </script>
 
 </body>
