@@ -254,6 +254,15 @@
     .designer-credit {
       margin-top: 20px; font-size: 11px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px;
     }
+    @keyframes countPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); color: var(--accent); }
+      100% { transform: scale(1); }
+    }
+    .count-pop {
+      display: inline-block;
+      animation: countPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
   </style>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -528,7 +537,21 @@ document.getElementById("tab-admin").onclick = () => {
 };
 
 // تحديث الواجهة
+let currentCounts = { male: -1, female: -1 };
+
+function triggerPop(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove("count-pop");
+  void el.offsetWidth; 
+  el.classList.add("count-pop");
+}
+
 function updateUI(hall, count) {
+  if (currentCounts[hall] === count) return;
+  const isInitial = currentCounts[hall] === -1;
+  currentCounts[hall] = count;
+
   const percent = Math.round((count / MAX) * 100);
   const dashOffset = 226 - (percent / 100 * 226);
 
@@ -538,12 +561,20 @@ function updateUI(hall, count) {
     maleProgress.style.width = percent + "%";
     document.getElementById("maleGauge").style.strokeDashoffset = dashOffset;
     maleCountAdmin.textContent = count;
+    if (!isInitial) {
+      triggerPop("maleCount");
+      triggerPop("maleCountAdmin");
+    }
   } else {
     femaleCount.textContent = count;
     femalePercent.textContent = percent + "%";
     femaleProgress.style.width = percent + "%";
     document.getElementById("femaleGauge").style.strokeDashoffset = dashOffset;
     femaleCountAdmin.textContent = count;
+    if (!isInitial) {
+      triggerPop("femaleCount");
+      triggerPop("femaleCountAdmin");
+    }
   }
 }
 
@@ -577,10 +608,34 @@ adminLoginBtn.onclick = () => {
 };
 
 // أزرار الإدارة
-maleInc.onclick = () => setCountInDB("male", Number(maleCountAdmin.textContent) + 1);
-maleDec.onclick = () => setCountInDB("male", Number(maleCountAdmin.textContent) - 1);
-femaleInc.onclick = () => setCountInDB("female", Number(femaleCountAdmin.textContent) + 1);
-femaleDec.onclick = () => setCountInDB("female", Number(femaleCountAdmin.textContent) - 1);
+maleInc.onclick = () => {
+  const next = Number(maleCountAdmin.textContent) + 1;
+  if (next <= MAX) {
+    updateUI("male", next); // Optimistic Update
+    setCountInDB("male", next);
+  }
+};
+maleDec.onclick = () => {
+  const next = Number(maleCountAdmin.textContent) - 1;
+  if (next >= 0) {
+    updateUI("male", next); // Optimistic Update
+    setCountInDB("male", next);
+  }
+};
+femaleInc.onclick = () => {
+  const next = Number(femaleCountAdmin.textContent) + 1;
+  if (next <= MAX) {
+    updateUI("female", next); // Optimistic Update
+    setCountInDB("female", next);
+  }
+};
+femaleDec.onclick = () => {
+  const next = Number(femaleCountAdmin.textContent) - 1;
+  if (next >= 0) {
+    updateUI("female", next); // Optimistic Update
+    setCountInDB("female", next);
+  }
+};
 
 resetAll.onclick = async () => {
   if (confirm("هل تريد تصفير جميع العدادات؟")) {
