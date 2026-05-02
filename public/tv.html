@@ -249,12 +249,17 @@ function updateTV(male, female) {
 }
 
 async function loadTV() {
-  const { data } = await supabase.from("halls").select("*");
-  if (data) {
-    const male = data.find(x => x.hall_name === "male")?.count || 0;
-    const female = data.find(x => x.hall_name === "female")?.count || 0;
-    updateTV(male, female);
+  const { data, error } = await supabase.from("halls").select("*");
+
+  if (error || !data) {
+    console.error("Supabase Error:", error);
+    return;
   }
+
+  const male = data.find(x => x.hall_name === "male")?.count || 0;
+  const female = data.find(x => x.hall_name === "female")?.count || 0;
+
+  updateTV(male, female);
 }
 
 loadTV();
