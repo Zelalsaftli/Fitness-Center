@@ -116,6 +116,49 @@
       100% { transform: scale(1); }
     }
     .count-pop { display: inline-block; animation: countPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+    /* TV Mode Styles */
+    #tv-mode {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      z-index: 9999;
+      padding: 40px;
+      overflow-y: auto;
+      display: none;
+    }
+    .tv-container { max-width: 900px; margin: auto; }
+    .tv-header { text-align: center; margin-bottom: 40px; }
+    .tv-logo { font-size: 46px; font-weight: 900; letter-spacing: 2px; color: #fff; }
+    .tv-datetime { margin-top: 10px; }
+    .tv-time { font-size: 38px; font-weight: 800; margin-bottom: 5px; }
+    .tv-date { font-size: 20px; color: #bbb; }
+    .tv-quote { margin-top: 20px; font-size: 22px; font-weight: 700; color: #00ff6a; }
+    .tv-card { background: #0d0d0d; padding: 35px; border-radius: 20px; margin-bottom: 40px; border: 1px solid #1a1a1a; }
+    .tv-hall-title { font-size: 28px; font-weight: 900; margin-bottom: 15px; }
+    .tv-percent { font-size: 54px; font-weight: 900; margin-bottom: 15px; text-align: center; }
+    .tv-progress { width: 100%; height: 20px; background: #222; border-radius: 999px; overflow: hidden; margin-bottom: 15px; }
+    .tv-progress-fill { height: 100%; width: 0%; transition: width 0.25s ease-out; }
+    .male .tv-progress-fill { background: #1e90ff; box-shadow: 0 0 15px #1e90ff; }
+    .female .tv-progress-fill { background: #ff3fb4; box-shadow: 0 0 15px #ff3fb4; }
+    .tv-count { font-size: 24px; color: #bbb; font-weight: 700; text-align: center; }
+    .fade { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s ease forwards; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+    .updating { animation: pulse 0.5s ease-in-out; }
+    .tv-back-btn {
+      position: fixed; top: 20px; right: 20px;
+      background: rgba(255, 255, 255, 0.1); color: #fff;
+      padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; transition: 0.3s;
+    }
+    .tv-back-btn:hover { background: #00ff6a; color: #000; border-color: #00ff6a; }
+    .open-tv-btn {
+      width: 100%; padding: 12px; background: #111; color: var(--muted);
+      border: 1px solid #222; border-radius: 12px; margin-top: 15px;
+      font-weight: 700; cursor: pointer; transition: 0.2s;
+    }
+    .open-tv-btn:hover { background: #222; color: #fff; }
   </style>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -204,13 +247,48 @@
       للتواصل: +963 998 556 600
     </div>
     <div style="margin-top:10px;">
-      <a href="/tv.html" style="color:var(--muted); text-decoration:underline; font-size:12px;">فتح عرض الشاشة الكبيرة (TV View)</a>
+      <button id="open-tv-btn" class="open-tv-btn">عرض شاشة التلفزيون (TV View)</button>
     </div>
     <div style="margin-top:15px; font-size:11px; color:#64748b; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px;">
       تم التصميم بواسطة <span style="color:var(--accent); font-weight:bold;">Dr. Zelal Alsaftli</span>
     </div>
-  </footer>
 </div>
+
+<!-- TV Mode Overlay -->
+<div id="tv-mode">
+  <button class="tv-back-btn" onclick="hideTV()">← العودة للوضع الطبيعي</button>
+  
+  <div class="tv-container">
+    <div class="tv-header">
+      <img src="https://scontent-lga3-3.xx.fbcdn.net/v/t39.30808-6/659076934_122102040056884543_1908356830458985739_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=2rN4XIGctvkQ7kNvwFBH3s7&_nc_oc=Adr4qSuzAWvVGOLOclP1naaUScIcdTPVDh7BimXXM_wIIKfZnXBG4qUkdUsDnuqZ3yE&_nc_zt=23&_nc_ht=scontent-lga3-3.xx&_nc_gid=JEFLYLpRwkPXOSrUZqwcrg&_nc_ss=78289&oh=00_Af7FevU0lHXfYB3CJNHcCFGTvWhtd66WLmzsk2bJ59gH_w&oe=69FBA9E0" alt="Logo" style="width: 200px; height: 200px; border-radius: 50%; border: 4px solid #00ff6a; margin-bottom: 20px; box-shadow: 0 0 30px rgba(0,255,106,0.4); display: inline-block;">
+      <div class="tv-logo">FITNESS CENTER</div>
+      <div class="tv-datetime">
+        <div id="tv-time" class="tv-time">00:00</div>
+        <div id="tv-date" class="tv-date">-- --- ----</div>
+      </div>
+      <div id="tv-quote" class="tv-quote"></div>
+    </div>
+
+    <div class="tv-card male fade">
+      <div class="tv-hall-title">صالة الذكور</div>
+      <div class="tv-percent" id="male-percent-tv">0%</div>
+      <div class="tv-progress">
+        <div class="tv-progress-fill" id="male-bar-tv"></div>
+      </div>
+      <div class="tv-count" id="male-count-tv">0 / 100</div>
+    </div>
+
+    <div class="tv-card female fade">
+      <div class="tv-hall-title">صالة الإناث</div>
+      <div class="tv-percent" id="female-percent-tv">0%</div>
+      <div class="tv-progress">
+        <div class="tv-progress-fill" id="female-bar-tv"></div>
+      </div>
+      <div class="tv-count" id="female-count-tv">0 / 100</div>
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://akundvjvbcudlfkrtpge.supabase.co";
@@ -257,6 +335,15 @@ const femaleInc = document.getElementById("female-inc");
 const femaleDec = document.getElementById("female-dec");
 const resetAll = document.getElementById("reset-all");
 
+const tvMode = document.getElementById("tv-mode");
+const openTvBtn = document.getElementById("open-tv-btn");
+const malePercentTV = document.getElementById("male-percent-tv");
+const femalePercentTV = document.getElementById("female-percent-tv");
+const maleBarTV = document.getElementById("male-bar-tv");
+const femaleBarTV = document.getElementById("female-bar-tv");
+const maleCountTV = document.getElementById("male-count-tv");
+const femaleCountTV = document.getElementById("female-count-tv");
+
 let counts = { male: 0, female: 0 };
 
 // حركة بسيطة
@@ -276,12 +363,30 @@ function updateUI(hall, count) {
     if (malePercent) malePercent.textContent = percent + "%";
     if (maleBar) maleBar.style.width = percent + "%";
     if (maleCount) maleCount.textContent = `${count} / ${MAX}`;
+    
+    if (malePercentTV) malePercentTV.textContent = percent + "%";
+    if (maleBarTV) maleBarTV.style.width = percent + "%";
+    if (maleCountTV) maleCountTV.textContent = `${count} / ${MAX}`;
+    
     triggerPop(malePercent);
+    if (malePercentTV) {
+      malePercentTV.classList.add("updating");
+      setTimeout(() => malePercentTV.classList.remove("updating"), 500);
+    }
   } else {
     if (femalePercent) femalePercent.textContent = percent + "%";
     if (femaleBar) femaleBar.style.width = percent + "%";
     if (femaleCount) femaleCount.textContent = `${count} / ${MAX}`;
+
+    if (femalePercentTV) femalePercentTV.textContent = percent + "%";
+    if (femaleBarTV) femaleBarTV.style.width = percent + "%";
+    if (femaleCountTV) femaleCountTV.textContent = `${count} / ${MAX}`;
+
     triggerPop(femalePercent);
+    if (femalePercentTV) {
+      femalePercentTV.classList.add("updating");
+      setTimeout(() => femalePercentTV.classList.remove("updating"), 500);
+    }
   }
 }
 
@@ -338,13 +443,52 @@ document.getElementById("tab-admin").onclick = () => {
   document.getElementById("tab-users").classList.remove("active");
 };
 
+// TV Mode Controls
+function showTV() {
+  tvMode.style.display = "block";
+  document.body.style.overflow = "hidden";
+  showRandomSloganTV();
+}
+
+function hideTV() {
+  tvMode.style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+openTvBtn.onclick = showTV;
+
+// TV Slogans
+const tvQuotes = [
+  "لا تتوقف عندما تتعب.. توقف عندما تنتهي!",
+  "كل يوم أقوى من اليوم الذي قبله.",
+  "استمر… فالنتائج قادمة.",
+  "أنت أقوى مما تتخيل.",
+  "القوة تبدأ من العقل قبل الجسد."
+];
+
+function showRandomSloganTV() {
+  const sloganEl = document.getElementById("tv-quote");
+  if (sloganEl) {
+    sloganEl.textContent = tvQuotes[Math.floor(Math.random() * tvQuotes.length)];
+  }
+}
+setInterval(showRandomSloganTV, 30000);
+
 // الساعة
 function updateClock() {
   const now = new Date();
   const timeStr = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
   const dateStr = now.toLocaleDateString("ar-SY-u-nu-latn", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-  document.getElementById("time").textContent = timeStr;
-  document.getElementById("date").textContent = dateStr;
+  
+  const timeEl = document.getElementById("time");
+  const dateEl = document.getElementById("date");
+  const tvTimeEl = document.getElementById("tv-time");
+  const tvDateEl = document.getElementById("tv-date");
+
+  if (timeEl) timeEl.textContent = timeStr;
+  if (dateEl) dateEl.textContent = dateStr;
+  if (tvTimeEl) tvTimeEl.textContent = timeStr.replace(/:\d{2}$/, ""); // TV doesn't show seconds in tv.html spec but index does. I'll stick to 2-digit for TV as per user's earlier preference.
+  if (tvDateEl) tvDateEl.textContent = dateStr;
 }
 setInterval(updateClock, 1000);
 updateClock();
