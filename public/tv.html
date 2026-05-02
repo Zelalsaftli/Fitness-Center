@@ -246,7 +246,12 @@ function updateTV(male, female) {
 
 async function loadTV() {
   const { data, error } = await supabase.from("halls").select("*");
-
+document.body.insertAdjacentHTML(
+  "beforeend",
+  "<pre style='color:white;background:#222;padding:20px;border-radius:10px'>" +
+  JSON.stringify({ data, error }, null, 2) +
+  "</pre>"
+);
   if (error || !data) {
     console.error("Supabase Error:", error);
     return;
