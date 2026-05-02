@@ -97,7 +97,6 @@
       text-align: center;
     }
 
-    /* تأثير دخول */
     .fade {
       opacity: 0;
       transform: translateY(20px);
@@ -208,9 +207,79 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// عبارات تحفيزية تتغير تلقائيًا
+// عبارات تحفيزية
 const quotes = [
   "لا تتوقف عندما تتعب.. توقف عندما تنتهي!",
+  "كل يوم أقوى من اليوم الذي قبله.",
+  "استمر… فالنتائج قادمة.",
+  "أنت أقوى مما تتخيل.",
+  "القوة تبدأ من العقل قبل الجسد."
+];
+
+function showRandomSlogan() {
+  const sloganEl = document.getElementById("tv-quote");
+  if (sloganEl) {
+    sloganEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  }
+}
+showRandomSlogan();
+setInterval(showRandomSlogan, 30000);
+
+function updateTV(male, female) {
+  const maleP = Math.round((male / MAX) * 100);
+  const femaleP = Math.round((female / MAX) * 100);
+
+  malePercentTV.textContent = maleP + "%";
+  femalePercentTV.textContent = femaleP + "%";
+
+  maleBarTV.style.width = maleP + "%";
+  femaleBarTV.style.width = femaleP + "%";
+
+  maleCountTV.textContent = `${male} / ${MAX}`;
+  femaleCountTV.textContent = `${female} / ${MAX}`;
+
+  malePercentTV.classList.add("updating");
+  femalePercentTV.classList.add("updating");
+  setTimeout(() => {
+    malePercentTV.classList.remove("updating");
+    femalePercentTV.classList.remove("updating");
+  }, 500);
+}
+
+async function loadTV() {
+  const { data, error } = await supabase.from("halls").select("*");
+
+  /* ⭐ DEBUG — سيظهر البيانات أو الخطأ على الشاشة */
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    "<pre style='color:white;background:#222;padding:20px;border-radius:10px'>" +
+    JSON.stringify({ data, error }, null, 2) +
+    "</pre>"
+  );
+
+  if (error || !data) {
+    console.error("Supabase Error:", error);
+    return;
+  }
+
+  const male = data.find(x => x.hall_name === "male")?.count || 0;
+  const female = data.find(x => x.hall_name === "female")?.count || 0;
+
+  updateTV(male, female);
+}
+
+loadTV();
+
+supabase
+  .channel("tv-realtime")
+  .on("postgres_changes", { event: "*", schema: "public", table: "halls" }, loadTV)
+  .subscribe();
+
+setInterval(() => location.reload(), 3600000);
+</script>
+
+</body>
+</html>  "لا تتوقف عندما تتعب.. توقف عندما تنتهي!",
   "كل يوم أقوى من اليوم الذي قبله.",
   "استمر… فالنتائج قادمة.",
   "أنت أقوى مما تتخيل.",
