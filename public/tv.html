@@ -251,8 +251,8 @@ function updateTV(male, female) {
 async function loadTV() {
   const { data } = await supabase.from("halls").select("*");
   if (data) {
-    const male = data.find(x => x.hall_name === "male")?.current_count || 0;
-    const female = data.find(x => x.hall_name === "female")?.current_count || 0;
+    const male = data.find(x => x.hall_name === "male")?.count || 0;
+    const female = data.find(x => x.hall_name === "female")?.count || 0;
     updateTV(male, female);
   }
 }
@@ -263,6 +263,7 @@ supabase
   .channel("tv-realtime")
   .on("postgres_changes", { event: "*", schema: "public", table: "halls" }, loadTV)
   .subscribe();
+
 
 // Auto refresh every hour
 setInterval(() => location.reload(), 3600000);
