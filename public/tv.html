@@ -97,7 +97,6 @@
       text-align: center;
     }
 
-    /* تأثير دخول */
     .fade {
       opacity: 0;
       transform: translateY(20px);
@@ -195,7 +194,6 @@ const femaleBarTV = document.getElementById("female-bar-tv");
 const maleCountTV = document.getElementById("male-count-tv");
 const femaleCountTV = document.getElementById("female-count-tv");
 
-// تحديث الوقت
 function updateClock() {
   const now = new Date();
   const time = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
@@ -208,7 +206,6 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// عبارات تحفيزية تتغير تلقائيًا
 const quotes = [
   "لا تتوقف عندما تتعب.. توقف عندما تنتهي!",
   "كل يوم أقوى من اليوم الذي قبله.",
@@ -224,7 +221,7 @@ function showRandomSlogan() {
   }
 }
 showRandomSlogan();
-setInterval(showRandomSlogan, 30000); // تغيير الشعار كل 30 ثانية
+setInterval(showRandomSlogan, 30000);
 
 function updateTV(male, female) {
   const maleP = Math.round((male / MAX) * 100);
@@ -239,7 +236,6 @@ function updateTV(male, female) {
   maleCountTV.textContent = `${male} / ${MAX}`;
   femaleCountTV.textContent = `${female} / ${MAX}`;
 
-  // إضافة حركة بسيطة
   malePercentTV.classList.add("updating");
   femalePercentTV.classList.add("updating");
   setTimeout(() => {
@@ -256,8 +252,8 @@ async function loadTV() {
     return;
   }
 
-  const male = data.find(x => x.hall_name === "male")?.count || 0;
-  const female = data.find(x => x.hall_name === "female")?.count || 0;
+  const male = data.find(x => x.hall_name === "male")?.current_count || 0;
+  const female = data.find(x => x.hall_name === "female")?.current_count || 0;
 
   updateTV(male, female);
 }
@@ -269,8 +265,6 @@ supabase
   .on("postgres_changes", { event: "*", schema: "public", table: "halls" }, loadTV)
   .subscribe();
 
-
-// Auto refresh every hour
 setInterval(() => location.reload(), 3600000);
 </script>
 
